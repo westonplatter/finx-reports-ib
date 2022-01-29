@@ -1,0 +1,21 @@
+# don't save .env files. secrets belong in here.
+.env*
+
+# don't save data files
+data/*
+!data/.gitkeep
+*.xml
+*.csv
+
+# pytest files
+.pytest_cache
+
+# don't save jupyter notebook checkpoints
+.ipynb_checkpoints/*
+
+# let each dev decide on their conventions
+.pre-commit-config.yaml
+
+# let each dev decide on their conventions
+.python-version
+
