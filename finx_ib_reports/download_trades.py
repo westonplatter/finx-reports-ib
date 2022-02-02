@@ -1,4 +1,5 @@
 import time
+from lzma import FORMAT_ALONE
 from typing import Dict, List
 
 import pandas as pd
@@ -7,22 +8,47 @@ from ib_insync.flexreport import FlexReport
 from pydantic import BaseModel
 
 
+def parse_datetime_series(raw_series: pd.Series) -> pd.Series:
+    FORMAT = "%Y-%m-%d;%H%M%S"
+    raw_series = raw_series.replace(r'', pd.NaT)
+    series = pd.to_datetime(raw_series, errors="raise", format=FORMAT)
+    series = series.dt.tz_localize(tz="US/Eastern")
+    return series
+
+def parse_date_series(raw_series: pd.Series) -> pd.Series:
+    FORMAT = "%Y-%m-%d"
+    raw_series = raw_series.replace(r'', pd.NaT)
+    series = pd.to_datetime(raw_series, errors="raise", format=FORMAT).dt.date
+    return series
+
+
 class CustomFlexReport(FlexReport):
     def account_ids(self) -> List[str]:
         account_ids = self.df("AccountInformation")["accountId"].values.tolist()
         return list(set(account_ids))
 
     def open_positions_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.df("OpenPosition").query("accountId == @account_id").copy()
+        df = self.df("OpenPosition").query("accountId == @account_id").copy()
+        df = df.query("levelOfDetail == 'LOT'")
+        df.openDateTime = parse_datetime_series(df.openDateTime)
+        df.holdingPeriodDateTime = parse_datetime_series(df.holdingPeriodDateTime)
+        df.reportDate = parse_date_series(df.reportDate)
+        return df
 
     def trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.df("Trade").query("accountId == @account_id").copy()
+        df = self.df("Trade").query("accountId == @account_id").copy()
+        df.dateTime = parse_datetime_series(df.dateTime)
+        df.orderTime = parse_datetime_series(df.orderTime)
+        return df
 
     def closed_trades_by_account_id(self, account_id: str) -> pd.DataFrame:
         return self.trades_by_account_id(account_id).query("openCloseIndicator == 'C'").copy()
 
     def orders_by_account_id(self, account_id: str) -> pd.DataFrame:
         return self.df("Order").query("accountId == @account_id").copy()
+
+    def change_in_nav_by_account_id(self, account_id: str) -> pd.DataFrame:
+        return self.df("ChangeInNAV").query("accountId == account_id").copy()
 
 
 class ReportOutputAdapterCSV(BaseModel):
@@ -88,6 +114,20 @@ def fetch_report(flex_token: int, query_id: int, cache_report_on_disk: bool = Fa
     return report
 
 
+def load_report(xml_file_path: str) -> CustomFlexReport:
+    """Load CustomFlexReport from provided file path
+
+    Args:
+        xml_file_path (str): file path to the cached XML file
+
+    Returns:
+        CustomFlexReport: report
+    """
+    report = CustomFlexReport()
+    report.load(xml_file_path)
+    return report
+
+
 def get_config(file_name: str) -> Dict:
     """Returns `file_name` lines as Dict. Uses dotenv
 
@@ -127,11 +167,12 @@ def get_flex_token(configs: Dict) -> int:
     return int(configs["IB_FLEX_TOKEN"])
 
 
-def execute(report_name: str, file_name: str = ".env"):
+def execute(report_name: str, cache: bool = False, file_name: str = ".env"):
     """Execute the trades dowload process
 
     Args:
         report_name (str): report name as it exists in the env file. Eg, report_name=xyz, in env file=IB_REPORT_ID_XYZ
+        cache (bool): cache XML
         file_name (str): env file name. Defaults to ".env".
 
     """
@@ -139,5 +180,5 @@ def execute(report_name: str, file_name: str = ".env"):
     flex_token = get_flex_token(configs)
     query_id = get_query_id_for_report_name(configs, report_name)
 
-    report = fetch_report(flex_token, query_id)
+    report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
     process_report(report)
