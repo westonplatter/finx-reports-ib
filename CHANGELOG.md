@@ -1,6 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+- **open positions:** parse open positions (westonplatter)
+
 
 <a name="0.0.2"></a>
 ## [0.0.2] - 2022-01-29
