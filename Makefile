@@ -12,3 +12,6 @@ changelog:
 
 changelog.commit: changelog
 	git add CHANGELOG.md && git commit CHANGELOG.md -m "update changelog"
+
+test:
+	pytest .

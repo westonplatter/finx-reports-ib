@@ -1,5 +1,4 @@
 import time
-from lzma import FORMAT_ALONE
 from typing import Dict, List
 
 import pandas as pd
@@ -7,83 +6,8 @@ from dotenv import dotenv_values
 from ib_insync.flexreport import FlexReport
 from pydantic import BaseModel
 
-
-def parse_datetime_series(raw_series: pd.Series) -> pd.Series:
-    FORMAT = "%Y-%m-%d;%H%M%S"
-    raw_series = raw_series.replace(r'', pd.NaT)
-    series = pd.to_datetime(raw_series, errors="raise", format=FORMAT)
-    series = series.dt.tz_localize(tz="US/Eastern")
-    return series
-
-def parse_date_series(raw_series: pd.Series) -> pd.Series:
-    FORMAT = "%Y-%m-%d"
-    raw_series = raw_series.replace(r'', pd.NaT)
-    series = pd.to_datetime(raw_series, errors="raise", format=FORMAT).dt.date
-    return series
-
-
-class CustomFlexReport(FlexReport):
-    def account_ids(self) -> List[str]:
-        account_ids = self.df("AccountInformation")["accountId"].values.tolist()
-        return list(set(account_ids))
-
-    def open_positions_by_account_id(self, account_id: str) -> pd.DataFrame:
-        df = self.df("OpenPosition").query("accountId == @account_id").copy()
-        df = df.query("levelOfDetail == 'LOT'")
-        df.openDateTime = parse_datetime_series(df.openDateTime)
-        df.holdingPeriodDateTime = parse_datetime_series(df.holdingPeriodDateTime)
-        df.reportDate = parse_date_series(df.reportDate)
-        return df
-
-    def trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        df = self.df("Trade").query("accountId == @account_id").copy()
-        df.dateTime = parse_datetime_series(df.dateTime)
-        df.orderTime = parse_datetime_series(df.orderTime)
-        return df
-
-    def closed_trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.trades_by_account_id(account_id).query("openCloseIndicator == 'C'").copy()
-
-    def orders_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.df("Order").query("accountId == @account_id").copy()
-
-    def change_in_nav_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.df("ChangeInNAV").query("accountId == account_id").copy()
-
-
-class ReportOutputAdapterCSV(BaseModel):
-    """Adapter responsible for writting Report Sections to disk."""
-
-    class Config:
-        arbitrary_types_allowed = True
-
-    data_folder: str = "data"
-    account_id: str
-    report: CustomFlexReport
-
-    def gen_file_name(self, name: str) -> str:
-        return f"{self.data_folder}/{self.account_id}_{name}.csv"
-
-    def _put_df(self, df: pd.DataFrame, section: str) -> None:
-        fn = self.gen_file_name(section)
-        df.to_csv(fn)
-
-    def put_all(self):
-        self.put_trades()
-        self.put_close_trades()
-        self.put_open_positions()
-
-    def put_trades(self):
-        df = self.report.trades_by_account_id(self.account_id)
-        self._put_df(df, "trades")
-
-    def put_close_trades(self):
-        df = self.report.closed_trades_by_account_id(self.account_id)
-        self._put_df(df, "close_trades")
-
-    def put_open_positions(self):
-        df = self.report.open_positions_by_account_id(self.account_id)
-        self._put_df(df, "open_positions")
+from finx_ib_reports.adapters import ReportOutputAdapterCSV
+from finx_ib_reports.custom_flex_report import CustomFlexReport
 
 
 def process_report(report: CustomFlexReport):
