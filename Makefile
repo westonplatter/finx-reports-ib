@@ -19,13 +19,11 @@ test:
 release: release.applytag release.check release.build release.upload
 
 release.applytag:
-	echo $$(git describe --abbrev=0) > finx_ib_reports/version.txt
+	echo $$(git describe --tags --abbrev=0 ) > finx_ib_reports/version.txt
 
 release.check:
 	pre-commit run -a
-	if [[ `git status --porcelain` ]]; then
-		$(error Please git commit changes)
-	fi
+	git diff --quiet
 
 release.build:
 	python setup.py sdist bdist_wheel
