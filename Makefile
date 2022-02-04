@@ -15,3 +15,20 @@ changelog.commit: changelog
 
 test:
 	pytest .
+
+release: release.applytag release.check release.build release.upload
+
+release.applytag:
+	echo $$(git describe --abbrev=0) > finx_ib_reports/version.txt
+
+release.check:
+	pre-commit run -a
+	if [[ `git status --porcelain` ]]; then
+		$(error Please git commit changes)
+	fi
+
+release.build:
+	python setup.py sdist bdist_wheel
+
+release.upload:
+	twine upload dist/*

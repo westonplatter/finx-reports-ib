@@ -9,17 +9,17 @@ from pydantic import BaseModel
 
 def parse_datetime_series(raw_series: pd.Series) -> pd.Series:
     FORMAT = "%Y-%m-%d;%H%M%S"
-    raw_series = raw_series.replace(r'', pd.NaT)
+    raw_series = raw_series.replace(r"", pd.NaT)
     series = pd.to_datetime(raw_series, errors="raise", format=FORMAT)
     series = series.dt.tz_localize(tz="US/Eastern")
     return series
 
+
 def parse_date_series(raw_series: pd.Series) -> pd.Series:
     FORMAT = "%Y-%m-%d"
-    raw_series = raw_series.replace(r'', pd.NaT)
+    raw_series = raw_series.replace(r"", pd.NaT)
     series = pd.to_datetime(raw_series, errors="raise", format=FORMAT).dt.date
     return series
-
 
 
 class CustomFlexReport(FlexReport):

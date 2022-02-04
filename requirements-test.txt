@@ -1,5 +1,1 @@
-ipdb
 pytest
-
-# graphing libs
-matplotlib
