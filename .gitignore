@@ -1,3 +1,8 @@
+# ignore python package files
+build/*
+dist/*
+*.egg*
+
 # don't save .env files. secrets belong in here.
 .env*
 
@@ -14,14 +19,8 @@ data/*
 .ipynb_checkpoints/*
 
 # let each dev decide on their conventions
-.pre-commit-config.yaml
-
-# let each dev decide on their conventions
 .python-version
 
 # ignore private files
 weston*
 
-build/*
-dist/*
-*.egg*
