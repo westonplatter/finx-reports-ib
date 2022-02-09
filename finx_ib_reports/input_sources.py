@@ -7,10 +7,9 @@ class TwsApiSource:
         if ib is None:
             self.ib = IB()
             self.ib.connect('127.0.0.1', 8888, clientId=0)
-
-            # use delayed data
-            self.ib.reqMarketDataType(4)
-
+        else:
+            self.ib = ib
+            
     def get_accounts(self):
         return self.ib.managedAccounts()
 

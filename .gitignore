@@ -24,3 +24,5 @@ data/*
 # ignore private files
 weston*
 
+
+.ipy*
