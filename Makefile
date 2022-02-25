@@ -7,14 +7,30 @@ download.daily:
 download.weekly:
 	@python cli.py download --report-name=weekly --cache
 
+
+
+### dev/env ops ###############################################################
+
+env.update:
+	pip install -r requirements.txt
+
+env.update.all:
+	pip install -r requirements.txt
+	pip install -r requirements-test.txt
+	pip install -r requirements-dev.txt
+
+test:
+	pytest .
+
 changelog:
 	git-chglog -o CHANGELOG.md
 
 changelog.commit: changelog
 	git add CHANGELOG.md && git commit CHANGELOG.md -m "update changelog"
 
-test:
-	pytest .
+
+
+### release ###################################################################
 
 release: release.applytag release.check release.build release.upload
 

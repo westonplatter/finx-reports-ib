@@ -6,3 +6,5 @@ pydantic
 python-dotenv
 pytz
 requests
+
+opstrat
