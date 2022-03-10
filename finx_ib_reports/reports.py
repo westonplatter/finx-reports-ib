@@ -7,11 +7,8 @@ summary PnL.
 
 import pandas as pd
 
+similar_product_mapper = {"MCL": "CL", "YC": "ZC"}
 
-similar_product_mapper = {
-    "MCL": "CL",
-    "YC": "ZC"
-}
 
 class PnlReport:
     def __init__(self, positions, quotes):

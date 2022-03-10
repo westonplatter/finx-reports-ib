@@ -12,6 +12,7 @@ from finx_ib_reports.custom_flex_report import CustomFlexReport
 
 def process_report(report: CustomFlexReport):
     for account_id in report.account_ids():
+        # TODO(weston) hard coded for CSV output adapter
         output_adapter = ReportOutputAdapterCSV(data_folder="data", account_id=account_id, report=report)
         output_adapter.put_all()
 

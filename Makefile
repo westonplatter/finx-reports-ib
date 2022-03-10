@@ -19,6 +19,9 @@ env.update.all:
 	pip install -r requirements-test.txt
 	pip install -r requirements-dev.txt
 
+env.jupyter:
+	ipython kernel install --name "finx-all" --user
+
 test:
 	pytest .
 

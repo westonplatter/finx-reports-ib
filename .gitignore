@@ -21,6 +21,8 @@ data/*
 # let each dev decide on their conventions
 .python-version
 
+data
+
 # ignore private files
 weston*
 
