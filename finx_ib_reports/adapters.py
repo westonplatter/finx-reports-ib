@@ -50,7 +50,7 @@ class ReportOutputAdapterDiscord(BaseModel):
     account_id: str
     report: CustomFlexReport
     discord_webhook_url: str
-    expiring_positions_within_x_days: int = 10
+    expiring_positions_within_x_days: int = 4
 
     @property
     def public_account_id(self):
@@ -77,8 +77,11 @@ class ReportOutputAdapterDiscord(BaseModel):
             content = (
                 f".\n{len(expiring_positions.index)} positions to roll in {content}"
             )
-            data = {"content": content}
-            requests.post(self.discord_webhook_url, json=data)
+        else:
+            content = ".\n{self.public_account_id} - nothing to roll"
+
+        data = {"content": content}
+        requests.post(self.discord_webhook_url, json=data)
 
     def _get_expiring_positions(self, within_x_days: int) -> pd.DataFrame:
         """Among open positions, get expiring positions within X days"""
