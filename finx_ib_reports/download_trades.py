@@ -6,17 +6,31 @@ from dotenv import dotenv_values
 from ib_insync.flexreport import FlexReport
 from pydantic import BaseModel
 
-from finx_ib_reports.adapters import ReportOutputAdapterCSV
+from finx_ib_reports.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
 from finx_ib_reports.custom_flex_report import CustomFlexReport
 
 
 def process_report(report: CustomFlexReport):
     for account_id in report.account_ids():
-        output_adapter = ReportOutputAdapterCSV(data_folder="data", account_id=account_id, report=report)
+        output_adapter = ReportOutputAdapterCSV(
+            data_folder="data", account_id=account_id, report=report
+        )
         output_adapter.put_all()
 
 
-def fetch_report(flex_token: int, query_id: int, cache_report_on_disk: bool = False) -> CustomFlexReport:
+def process_report_discord(report: CustomFlexReport, discord_webhook_url: str):
+    for account_id in report.account_ids():
+        output_adapter = ReportOutputAdapterDiscord(
+            account_id=account_id,
+            report=report,
+            discord_webhook_url=discord_webhook_url,
+        )
+        output_adapter.put_notifications()
+
+
+def fetch_report(
+    flex_token: int, query_id: int, cache_report_on_disk: bool = False
+) -> CustomFlexReport:
     """Fetch report. Optionally save to disk (helpful for debugging)
 
     Args:
@@ -91,6 +105,18 @@ def get_flex_token(configs: Dict) -> int:
     return int(configs["IB_FLEX_TOKEN"])
 
 
+def get_discord_webhook_url(configs: Dict) -> str:
+    """Returns the discord portfolios webhook
+
+    Args:
+        configs (Dict): env file contents
+
+    Returns:
+        str: discord webhook url
+    """
+    return configs["PORTFOLIOS_DISCORD_WEBHOOK_URL"]
+
+
 def execute(report_name: str, cache: bool = False, file_name: str = ".env"):
     """Execute the trades dowload process
 
@@ -106,3 +132,13 @@ def execute(report_name: str, cache: bool = False, file_name: str = ".env"):
 
     report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
     process_report(report)
+
+
+def execute_discord(report_name: str, cache: bool = False, file_name: str = ".env"):
+    configs = get_config(file_name)
+    flex_token = get_flex_token(configs)
+    discord_webhook_url = get_discord_webhook_url(configs)
+    query_id = get_query_id_for_report_name(configs, report_name)
+
+    report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
+    process_report_discord(report, discord_webhook_url=discord_webhook_url)
