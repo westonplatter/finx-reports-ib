@@ -1,6 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Features
+- **notifications:** notify discord with expiring positions to roll ([#3](https://github.com/westonplatter/finx-airflow/issues/3)) (GitHub)
+
 
 <a name="0.0.3"></a>
 ## [0.0.3] - 2022-02-03
