@@ -42,7 +42,11 @@ class CustomFlexReport(FlexReport):
         return df
 
     def closed_trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return self.trades_by_account_id(account_id).query("openCloseIndicator == 'C'").copy()
+        return (
+            self.trades_by_account_id(account_id)
+            .query("openCloseIndicator == 'C'")
+            .copy()
+        )
 
     def orders_by_account_id(self, account_id: str) -> pd.DataFrame:
         return self.df("Order").query("accountId == @account_id").copy()
