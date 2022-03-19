@@ -78,7 +78,7 @@ class ReportOutputAdapterDiscord(BaseModel):
                 f".\n{len(expiring_positions.index)} positions to roll in {content}"
             )
         else:
-            content = ".\n{self.public_account_id} - nothing to roll"
+            content = f".\n{self.public_account_id} - nothing to roll"
 
         data = {"content": content}
         requests.post(self.discord_webhook_url, json=data)
