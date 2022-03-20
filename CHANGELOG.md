@@ -6,10 +6,9 @@
 ## [0.0.5] - 2022-03-19
 ### Bug Fixes
 - **git:** ignore settings and data ([#4](https://github.com/westonplatter/finx-airflow/issues/4)) 4bad86b (GitHub)
-- **tests:** switch to ib_json methodx 8599d50 (westonplatter)
 
 ### Features
-- **multi accounts:** handle many 59bcfec (westonplatter)
+- **multi accounts:** handle multiple IB logins/flex tokens. c337c35 (westonplatter)
 
 
 <a name="0.0.4"></a>
