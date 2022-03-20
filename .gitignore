@@ -2,7 +2,7 @@
 .env*
 
 # don't save data files
-data/*
+data
 !data/.gitkeep
 *.xml
 *.csv
@@ -18,6 +18,9 @@ data/*
 
 # let each dev decide on their conventions
 .python-version
+
+# ignore the vscode settings
+.vscode
 
 # ignore private files
 weston*
