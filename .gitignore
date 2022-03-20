@@ -22,6 +22,8 @@ data
 # ignore the vscode settings
 .vscode
 
+docs
+
 # ignore private files
 weston*
 

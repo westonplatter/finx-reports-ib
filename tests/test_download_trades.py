@@ -1,6 +1,6 @@
-from finx_ib_reports.download_trades import get_flex_token
+from finx_ib_reports.download_trades import get_ib_json
 
 
-def test_get_flex_token():
-    configs = {"IB_FLEX_TOKEN": 123}
-    assert get_flex_token(configs) == 123
+def test_get_ib_json():
+    configs = {"IB_JSON": '{"a": 1}'}
+    assert get_ib_json(configs) == {"a": 1}

@@ -1,11 +1,11 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
+
 import pandas as pd
+import requests
 from pydantic import BaseModel
 from pytz import timezone
-import requests
 
-from finx_ib_reports.custom_flex_report import CustomFlexReport
-from finx_ib_reports.custom_flex_report import parse_date_series
+from finx_ib_reports.custom_flex_report import CustomFlexReport, parse_date_series
 
 
 class ReportOutputAdapterCSV(BaseModel):

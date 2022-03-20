@@ -2,19 +2,17 @@
 Python package to fetch reports from IB.
 
 ## Example
-
 Example `.env` file,
 ```
-IB_FLEX_TOKEN=1111111222222233333
+IB_JSON='{"accounts": [{"name": "account1", "flex_token": "123", "weekly": 890}]}'
 
-IB_REPORT_ID_MYREPORT=123456
+PORTFOLIOS_DISCORD_WEBHOOK_URL=https://discord_url
 ```
 
 Example python,
 ```
-from finx_ib_reports.download_trades import execute
-report_name = "myreport"
-execute(report_name)
+from finx_ib_reports.download_trades import execute_discord_for_accounts
+execute_discord_for_accounts(report_name="weekly", cache=False, file_name=".env")
 ```
 
 And checkout the reports in `data`.

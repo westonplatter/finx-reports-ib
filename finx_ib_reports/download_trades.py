@@ -1,3 +1,4 @@
+import json
 import time
 from typing import Dict, List
 
@@ -78,31 +79,16 @@ def get_config(file_name: str) -> Dict:
     return dotenv_values(file_name)
 
 
-def get_query_id_for_report_name(configs: Dict, report_name: str) -> int:
-    """Returns query id for "IB_REPORT_ID_{report_name}"
-
-    Args:
-        configs (Dict): env file contents
-        report_name (str): IB_REPORT_ID_{this}
-
-    Returns:
-        int: IB report query id
-    """
-    key = f"IB_REPORT_ID_{report_name.upper()}"
-    assert key in configs, f".env config file did not contain key={key}"
-    return int(configs[key])
-
-
-def get_flex_token(configs: Dict) -> int:
-    """Returns the IB Flex Token value
+def get_ib_json(configs: Dict) -> Dict:
+    """Returns the IB json value as dict
 
     Args:
         configs (Dict): env file contents
 
     Returns:
-        int: IB Flex token
+        dict: IB json as dict
     """
-    return int(configs["IB_FLEX_TOKEN"])
+    return json.loads(configs["IB_JSON"])
 
 
 def get_discord_webhook_url(configs: Dict) -> str:
@@ -117,28 +103,55 @@ def get_discord_webhook_url(configs: Dict) -> str:
     return configs["PORTFOLIOS_DISCORD_WEBHOOK_URL"]
 
 
-def execute(report_name: str, cache: bool = False, file_name: str = ".env"):
-    """Execute the trades dowload process
+# TODO - refactor this to work with execute_discord_for_accounts
+# def execute(report_name: str, cache: bool = False, file_name: str = ".env"):
+#     """Execute the trades dowload process
 
-    Args:
-        report_name (str): report name as it exists in the env file. Eg, report_name=xyz, in env file=IB_REPORT_ID_XYZ
-        cache (bool): cache XML
-        file_name (str): env file name. Defaults to ".env".
+#     Args:
+#         report_name (str): report name as it exists in the env file. Eg, report_name=xyz, in env file=IB_REPORT_ID_XYZ
+#         cache (bool): cache XML
+#         file_name (str): env file name. Defaults to ".env".
 
-    """
+#     """
+#     configs = get_config(file_name)
+#     flex_token = get_flex_token(configs)
+#     query_id = get_query_id_for_report_name(configs, report_name)
+
+#     report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
+#     process_report(report)
+
+
+# TODO - execute_discord_for_accounts
+# def execute_discord(report_name: str, cache: bool = False, file_name: str = ".env"):
+#     configs = get_config(file_name)
+#     flex_token = get_flex_token(configs)
+#     discord_webhook_url = get_discord_webhook_url(configs)
+#     query_id = get_query_id_for_report_name(configs, report_name)
+
+#     report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
+#     process_report_discord(report, discord_webhook_url=discord_webhook_url)
+
+
+def execute_discord_for_accounts(
+    report_name: str, cache: bool = False, file_name: str = ".env"
+):
     configs = get_config(file_name)
-    flex_token = get_flex_token(configs)
-    query_id = get_query_id_for_report_name(configs, report_name)
+    data = get_ib_json(configs)
 
-    report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
-    process_report(report)
+    if "accounts" not in data:
+        return None
 
+    for account in data["accounts"]:
+        # ensure the account is setup for the report, if not skip
+        query_id = int(account[report_name.lower()])
+        if query_id <= 0:
+            continue
 
-def execute_discord(report_name: str, cache: bool = False, file_name: str = ".env"):
-    configs = get_config(file_name)
-    flex_token = get_flex_token(configs)
-    discord_webhook_url = get_discord_webhook_url(configs)
-    query_id = get_query_id_for_report_name(configs, report_name)
+        flex_token = account["flex_token"]
+        discord_webhook_url = get_discord_webhook_url(configs)
 
-    report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
-    process_report_discord(report, discord_webhook_url=discord_webhook_url)
+        # get report
+        report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)
+
+        # send notifications
+        process_report_discord(report, discord_webhook_url=discord_webhook_url)
