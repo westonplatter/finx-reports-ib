@@ -1,4 +1,4 @@
-from finx_ib_reports.download_trades import get_ib_json
+from finx_ib_reports.config_helpers import get_ib_json
 
 
 def test_get_ib_json():
