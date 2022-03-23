@@ -1,7 +1,7 @@
 import click
 from loguru import logger
 
-from finx_ib_reports.download_trades import execute
+from finx_ib_reports.download_trades import execute_csv_for_accounts
 
 
 @click.group()
@@ -18,7 +18,7 @@ def core():
 @click.option("--cache", default=False, is_flag=True, help="Cache XML file on disk")
 def download(report_name: str, cache: bool):
     logger.info(f"Fetching IB Report (name={report_name})")
-    execute(report_name, cache=cache)
+    execute_csv_for_accounts(report_name, cache=cache)
 
 
 if __name__ == "__main__":
