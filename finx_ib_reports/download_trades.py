@@ -1,9 +1,5 @@
 import time
 
-import pandas as pd
-from ib_insync.flexreport import FlexReport
-from pydantic import BaseModel
-
 from finx_ib_reports.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
 from finx_ib_reports.config_helpers import (
     get_config,

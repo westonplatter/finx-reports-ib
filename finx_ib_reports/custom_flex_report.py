@@ -36,17 +36,19 @@ class CustomFlexReport(FlexReport):
         return df
 
     def trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        df = self.df("Trade").query("accountId == @account_id").copy()
+        df = self.df("Trade")
+        if df is None:
+            return
+        df = df.query("accountId == @account_id").copy()
         df.dateTime = parse_datetime_series(df.dateTime)
         df.orderTime = parse_datetime_series(df.orderTime)
         return df
 
     def closed_trades_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return (
-            self.trades_by_account_id(account_id)
-            .query("openCloseIndicator == 'C'")
-            .copy()
-        )
+        df = self.trades_by_account_id(account_id)
+        if df is None:
+            return
+        return df.query("openCloseIndicator == 'C'").copy()
 
     def orders_by_account_id(self, account_id: str) -> pd.DataFrame:
         return self.df("Order").query("accountId == @account_id").copy()

@@ -1,11 +1,21 @@
 from datetime import datetime, timedelta
 
+from loguru import logger
 import pandas as pd
 import requests
 from pydantic import BaseModel
 from pytz import timezone
 
 from finx_ib_reports.custom_flex_report import CustomFlexReport, parse_date_series
+
+# class ReportOutputAdapterShell(BaseModel):
+#     class Config:
+#         arbitrary_types_allowed = True
+#     report: CustomFlexReport
+#     def confirm_sections(self):
+#         expected_sections = ["Trades"]
+#         for section in expected_sections:
+#           # do confirmation work here
 
 
 class ReportOutputAdapterCSV(BaseModel):
@@ -19,6 +29,7 @@ class ReportOutputAdapterCSV(BaseModel):
 
     def process_accounts(self):
         for account_id in self.report.account_ids():
+            logger.info(f"CSV output adapter for {account_id}")
             self.put_all(aid=account_id)
 
     def put_all(self, aid: str):
@@ -35,14 +46,32 @@ class ReportOutputAdapterCSV(BaseModel):
 
     def put_trades(self, aid):
         df = self.report.trades_by_account_id(aid)
+        if df is None:
+            logger.warning(
+                f"AccountId={aid}. Unable to get trades data from report. "
+                "Does the Flex Report have Trades turned on?"
+            )
+            return
         self._put_df(aid, df, "trades")
 
     def put_close_trades(self, aid):
         df = self.report.closed_trades_by_account_id(aid)
+        if df is None:
+            logger.warning(
+                f"AccountId={aid}. Unable to get trades data from report. "
+                "Does the Flex Report have Trades turned on?"
+            )
+            return
         self._put_df(aid, df, "close_trades")
 
     def put_open_positions(self, aid):
         df = self.report.open_positions_by_account_id(aid)
+        if df is None:
+            logger.warning(
+                f"AccountId={aid}. Unable to get positions data from report. "
+                "Does the Flex Report have Positions turned on?"
+            )
+            return
         self._put_df(aid, df, "open_positions")
 
 
