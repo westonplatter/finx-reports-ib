@@ -1,3 +1,7 @@
+###############################################################################
+#
+# Download reports
+#
 download:
 	@python cli.py download --report-name=annual
 
@@ -7,6 +11,13 @@ download.daily:
 download.weekly:
 	@python cli.py download --report-name=weekly --cache
 
+download.annual:
+	@python cli.py download --report-name=annual --cache
+
+###############################################################################
+#
+# dev commands
+#
 changelog:
 	git-chglog -o CHANGELOG.md
 
@@ -16,6 +27,10 @@ changelog.commit: changelog
 test:
 	pytest .
 
+###############################################################################
+#
+# release
+#
 release: release.applytag release.check release.build release.upload
 
 release.applytag:

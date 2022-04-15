@@ -1,5 +1,7 @@
 import time
 
+from loguru import logger
+
 from finx_ib_reports.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
 from finx_ib_reports.config_helpers import (
     get_config,
@@ -39,6 +41,7 @@ def fetch_report(
     if cache_report_on_disk:
         epoch_time = int(time.time())
         report_path = f"data/flex_report_{epoch_time}.xml"
+        logger.debug(f"save file to disk {report_path}")
         report.save(report_path)
 
     return report
@@ -78,6 +81,7 @@ def execute_csv_for_accounts(
     for account in data["accounts"]:
         query_id = int(account[report_name.lower()])
         if query_id <= 0:
+            logger.warning(f"{account['name']} does not have a {report_name} query_id")
             continue
         flex_token = account["flex_token"]
         report = fetch_report(flex_token, query_id, cache_report_on_disk=cache)

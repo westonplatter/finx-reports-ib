@@ -7,3 +7,9 @@ matplotlib
 
 # releasing
 twine
+
+# for working with excel, pd.read_excel(filename)
+openpyxl
+
+
+dotenv

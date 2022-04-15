@@ -30,3 +30,7 @@ weston*
 build/*
 dist/*
 *.egg*
+
+*.ipynb_checkpoints*
+
+.DS_Store
