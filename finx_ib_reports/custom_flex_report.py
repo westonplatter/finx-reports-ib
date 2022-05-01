@@ -61,6 +61,5 @@ class CustomFlexReport(FlexReport):
         return self.df("Order").query(f"{self.COL_ACCOUNT_ID} == @account_id").copy()
 
     def change_in_nav_by_account_id(self, account_id: str) -> pd.DataFrame:
-        return (
-            self.df("ChangeInNAV").query(f"{self.COL_ACCOUNT_ID} == account_id").copy()
-        )
+        xdf = self.df("ChangeInNAV")
+        return xdf[xdf[self.COL_ACCOUNT_ID] == account_id].copy()
