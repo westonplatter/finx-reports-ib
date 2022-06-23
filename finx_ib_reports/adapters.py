@@ -19,7 +19,7 @@ from finx_ib_reports.custom_flex_report import CustomFlexReport, parse_date_seri
 
 
 class ReportOutputAdapterCSV(BaseModel):
-    """Adapter responsible for writting Report Sections to disk."""
+    """Adapter responsible for writing Report Sections to disk."""
 
     class Config:
         arbitrary_types_allowed = True
