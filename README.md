@@ -1,4 +1,4 @@
-# Finx IB Reports
+# Finx Reports - IB
 Python package to fetch reports from IB.
 
 ## Example
