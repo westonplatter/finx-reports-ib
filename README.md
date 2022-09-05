@@ -29,11 +29,13 @@ Python package to generate reports from Interactive Brokers.
    15. Breakout by Day = No
 
 
-2. Clone the repo
-```
-git clone git@github.com:westonplatter/finx-reports-ib.git
-cd finx-reports-ib
-```
+2. Clone the repo + install dependencies
+    
+    ```
+    git clone git@github.com:westonplatter/finx-reports-ib.git
+    cd finx-reports-ib
+    pip install -r requirements/requirements.txt
+    ```
 
 3. Create your own `.env` file
     
