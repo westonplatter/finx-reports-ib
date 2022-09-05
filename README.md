@@ -18,7 +18,7 @@ Python package to generate reports from Interactive Brokers.
    5. Format = XML
    6. Period = Last 365 Days
    7. Date Format = yyy-MM-dd
-   8. Time Format = HHmmss
+   8. Time Format = HH:mm:ss
    9. Date/Time Separator = ;semicolon
    10. ProfitLoss = Default
    11. Include Canceled Trades = No
