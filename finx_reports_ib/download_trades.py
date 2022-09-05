@@ -2,13 +2,13 @@ import time
 
 from loguru import logger
 
-from finx_ib_reports.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
-from finx_ib_reports.config_helpers import (
+from finx_reports_ib.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
+from finx_reports_ib.config_helpers import (
     get_config,
     get_ib_json,
     get_discord_webhook_url,
 )
-from finx_ib_reports.custom_flex_report import CustomFlexReport
+from finx_reports_ib.custom_flex_report import CustomFlexReport
 
 
 def process_report_discord(report: CustomFlexReport, discord_webhook_url: str):

@@ -6,7 +6,7 @@ import requests
 from pydantic import BaseModel
 from pytz import timezone
 
-from finx_ib_reports.custom_flex_report import CustomFlexReport, parse_date_series
+from finx_reports_ib.custom_flex_report import CustomFlexReport, parse_date_series
 
 # class ReportOutputAdapterShell(BaseModel):
 #     class Config:
