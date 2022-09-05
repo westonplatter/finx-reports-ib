@@ -1,7 +1,7 @@
 import setuptools
 
 version_text = None
-with open("finx_ib_reports/version.txt", "r", encoding="utf-8") as f:
+with open("finx_reports_ib/version.txt", "r", encoding="utf-8") as f:
     version_text = f.read()
 
 with open("README.md", "r") as f:
@@ -10,7 +10,7 @@ with open("README.md", "r") as f:
 deps = [
     "ib_insync",
     "loguru",
-    "pandas >=1.3.0,<1.4",
+    "pandas",
     "numpy",
     "pydantic",
     "python-dotenv",
@@ -18,12 +18,10 @@ deps = [
     "requests",
 ]
 
-test_deps = ["pytest"]
-
-project_url = "https://github.com/westonplatter/finx-ib-reports"
+project_url = "https://github.com/westonplatter/finx-reports-ib"
 
 setuptools.setup(
-    name="finx_ib_reports",
+    name="finx_reports_ib",
     version=version_text,
     description="IBKR report data via ib_insync",
     long_description=long_description,
@@ -33,9 +31,8 @@ setuptools.setup(
     license="BSD-3",
     url=project_url,
     python_requires=">=3.6",
-    packages=["finx_ib_reports"],
+    packages=["finx_reports_ib"],
     install_requires=deps,
-    tests_require=test_deps,
     project_urls={
         "Issue Tracker": f"{project_url}/issues",
         "Source Code": f"{project_url}",

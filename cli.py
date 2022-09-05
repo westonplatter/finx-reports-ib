@@ -1,7 +1,7 @@
 import click
 from loguru import logger
 
-from finx_ib_reports.download_trades import execute_csv_for_accounts
+from finx_reports_ib.download_trades import execute_csv_for_accounts
 
 
 @click.group()
