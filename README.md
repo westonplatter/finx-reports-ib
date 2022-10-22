@@ -5,7 +5,7 @@ Python package to generate reports from Interactive Brokers.
 
 1. Create a Flex Report in the Interactive Broker website (see this [link](https://guides.interactivebrokers.com/ap/Content/activityflex.htm))
    1. Query Name = AllAccounts-AnnualReport
-   2. Sections to include in the report. In each, select all Options and all Fields/Columns except: `Serial Number`, `Delivery Type`, `Commodity Type`, `Fineness`, `Weight`.
+   2. Sections to include in the report. In each, select all Options and all Fields/Columns.
       1. Account Information
       2. Change in NAV
       3. Complex Positions
