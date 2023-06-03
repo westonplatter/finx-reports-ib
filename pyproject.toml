@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "finx_reports_ib"
-description="IBKR report data via ib_insync",
+description="IBKR report data via ib_insync"
 authors = [
     {name = "Weston Platter", email = "westonplatter+finx@gmail.com"},
 ]
