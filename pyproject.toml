@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "finx_reports_ib"
+description="IBKR report data via ib_insync"
+authors = [
+    {name = "Weston Platter", email = "westonplatter+finx@gmail.com"},
+]
+dependencies = [
+    "ib_insync",
+    "loguru",
+    "pandas",
+    "numpy",
+    "pydantic",
+    "python-dotenv",
+    "pytz",
+    "requests",
+]
+requires-python = ">=3.7"
+license = {text = "BSD-3"}
+dynamic = ["version"]
+readme = "README.md"
+
+
+[tool.setuptools.dynamic]
+version = {attr = "finx_reports_ib.VERSION"}
+
+
+[tool.setuptools.packages.find]
+include = ['finx_reports_ib*']
+ 
+
+[project.urls]
+Homepage = "https://github.com/westonplatter/finx-reports-ib"
+"Issue Tracker" = "https://github.com/westonplatter/finx-reports-ib/issues"
+"Source Code" = "https://github.com/westonplatter/finx-reports-ib"
+
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+dev = [
+    "ipdb",
+    "click",
+    "matplotlib",
+    "twine",
+    "openpyxl",
+    "dotenv",
+]
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+    "myst_parser",
+]
