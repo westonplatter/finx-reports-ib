@@ -1,16 +1,19 @@
 API Reference
 =============
 
-.. automodule:: finx_reports_ib.adapters
-    :members:
-
 .. automodule:: finx_reports_ib.config_helpers
     :members:
 
-.. automodule:: finx_reports_ib.custom_flex_report
+.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterCSV
+    :members:
+    
+.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterPandas
     :members:
 
-.. automodule:: finx_reports_ib.date_helpers
+.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterDiscord
+    :members:
+
+.. autoclass:: finx_reports_ib.custom_flex_report.CustomFlexReport
     :members:
 
 .. automodule:: finx_reports_ib.download_trades
