@@ -1,6 +1,17 @@
 # Finx Reports - IB
 Python package to generate reports from Interactive Brokers.
 
+## Installing
+Install the module from github,
+```
+pip install git+https://https://github.com/westonplatter/finx-reports-ib.git@main
+```
+
+Or add it to your `requirements.txt` file,
+```
+finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.git@main
+```
+
 ## Getting Started
 
 1. Create a Flex Report in the Interactive Broker website (see this [link](https://guides.interactivebrokers.com/ap/Content/activityflex.htm))
@@ -29,12 +40,12 @@ Python package to generate reports from Interactive Brokers.
    15. Breakout by Day = No
 
 
-2. Clone the repo + install dependencies
+2. Clone the repo and install it
     
     ```
     git clone git@github.com:westonplatter/finx-reports-ib.git
     cd finx-reports-ib
-    pip install -r requirements/requirements.txt
+    pip install --edit .
     ```
 
 3. Create your own `.env` file
@@ -58,8 +69,3 @@ Python package to generate reports from Interactive Brokers.
     ```
 
 5. See files in the `data` directory
-
-
-
-## License
-BSD-3. See LICENSE file.
