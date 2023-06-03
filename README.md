@@ -1,5 +1,8 @@
+[![Tests](https://github.com/westonplatter/finx-reports-ib/actions/workflows/ci.yml/badge.svg)](https://github.com/westonplatter/finx-reports-ib/actions/workflows/ci.yml) [![Docs](https://github.com/westonplatter/finx-reports-ib/actions/workflows/docs.yml/badge.svg)](https://github.com/westonplatter/finx-reports-ib/actions/workflows/docs.yml)
+
 # Finx Reports - IB
 Python package to generate reports from Interactive Brokers.
+
 
 ## Installing
 Install the module from github,
