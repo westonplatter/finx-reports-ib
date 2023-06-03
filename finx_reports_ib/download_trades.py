@@ -2,7 +2,10 @@ import time
 
 from loguru import logger
 
-from finx_reports_ib.adapters import ReportOutputAdapterCSV, ReportOutputAdapterDiscord
+from finx_reports_ib.adapters import (
+    ReportOutputAdapterCSV, 
+    ReportOutputAdapterDiscord,
+)
 from finx_reports_ib.config_helpers import (
     get_config,
     get_ib_json,
@@ -12,7 +15,9 @@ from finx_reports_ib.custom_flex_report import CustomFlexReport
 
 
 def process_report_discord(report: CustomFlexReport, discord_webhook_url: str):
-    """Process report through discord output adapter"""
+    """
+    Process report through discord output adapter
+    """
     for account_id in report.account_ids():
         output_adapter = ReportOutputAdapterDiscord(
             account_id=account_id,
@@ -25,7 +30,8 @@ def process_report_discord(report: CustomFlexReport, discord_webhook_url: str):
 def fetch_report(
     flex_token: int, query_id: int, cache_report_on_disk: bool = False
 ) -> CustomFlexReport:
-    """Fetch report. Optionally save to disk (helpful for debugging)
+    """
+    Fetch report. Optionally save to disk (helpful for debugging)
 
     Args:
         flex_token (int): IB Flex Token
@@ -48,7 +54,8 @@ def fetch_report(
 
 
 def load_report(xml_file_path: str) -> CustomFlexReport:
-    """Load CustomFlexReport from provided file path
+    """
+    Load CustomFlexReport from provided file path
 
     Args:
         xml_file_path (str): file path to the cached XML file
@@ -64,7 +71,8 @@ def load_report(xml_file_path: str) -> CustomFlexReport:
 def execute_csv_for_accounts(
     report_name: str, cache: bool = False, file_name: str = ".env"
 ):
-    """Execute the trades dowload process for accounts
+    """
+    Execute the trades dowload process for accounts
 
     Args:
         report_name (str): report name as it exists in the env file. Eg, report_name=xyz, in env file=IB_REPORT_ID_XYZ
@@ -92,7 +100,8 @@ def execute_csv_for_accounts(
 def execute_discord_for_accounts(
     report_name: str, cache: bool = False, file_name: str = ".env"
 ) -> None:
-    """Execute the discord notifications process for accounts
+    """
+    Execute the discord notifications process for accounts
 
     Args:
         report_name (str): the report to execute. Expected options: daily, weekly, annual
