@@ -37,4 +37,14 @@ setuptools.setup(
         "Issue Tracker": f"{project_url}/issues",
         "Source Code": f"{project_url}",
     },
+    extras_require={
+        "test": [
+            "pytest"
+        ],
+        "docs": [
+            "sphinx",
+            "sphinx_rtd_theme",
+            "myst_parser",
+        ],
+    },  
 )
