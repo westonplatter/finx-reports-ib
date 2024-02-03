@@ -3,24 +3,23 @@ import re
 import pandas as pd
 
 
-import pandas as pd
-
 def parse_datetime_series(raw_series: pd.Series) -> pd.Series:
     raw_series = raw_series.replace("", pd.NaT)
 
     # remove semicolons in values
     # ie, "2021-08-20;09:30:00" -> "2021-08-20;093000"
-    raw_series_without_colons = raw_series.str.replace(':', '')
+    raw_series_without_colons = raw_series.str.replace(":", "")
 
     # values without semicolons are in the format: "2021-08-20;093000"
     format_without_semicolons = "%Y-%m-%d;%H%M%S"
-    series = pd.to_datetime(raw_series_without_colons, format=format_without_semicolons, errors='coerce')
+    series = pd.to_datetime(
+        raw_series_without_colons, format=format_without_semicolons, errors="coerce"
+    )
 
     # ibkr defaults to eastern time for most products
     series = series.dt.tz_localize(tz="US/Eastern")
-    
-    return series
 
+    return series
 
 
 def parse_date_series(raw_series: pd.Series) -> pd.Series:

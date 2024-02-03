@@ -7,7 +7,7 @@ from dotenv import dotenv_values
 def get_config(file_name: str) -> Dict:
     """
     Returns `file_name` lines as Dict.
-    
+
     Uses dotenv
 
     Args:
@@ -22,7 +22,7 @@ def get_config(file_name: str) -> Dict:
 def get_ib_json(configs: Dict) -> Dict:
     """
     Returns the json parsed value for the IB_JSON env var.
-    
+
     This should be a json string
 
     Args:
