@@ -4,9 +4,13 @@ import pandas as pd
 
 
 def parse_datetime_series(raw_series: pd.Series) -> pd.Series:
-    FORMAT = "%Y-%m-%d;%H:%M:%S"
     raw_series = raw_series.replace(r"", pd.NaT)
-    series = pd.to_datetime(raw_series, errors="raise", format=FORMAT)
+
+    format_sans_semicolons = "%Y-%m-%d;%H:%M:%S"
+    format_without_semicolons = "%Y-%m-%d;%H%M%S"
+    datetime_format = format_sans_semicolons if raw_series.str.contains(";").any() else format_without_semicolons
+    series = pd.to_datetime(raw_series, errors="raise", format=datetime_format)
+
     series = series.dt.tz_localize(tz="US/Eastern")
     return series
 
