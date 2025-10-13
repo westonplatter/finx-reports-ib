@@ -6,12 +6,12 @@ Python package to generate reports from Interactive Brokers.
 
 ## Installing
 Install the module from github,
-```
+```bash
 pip install git+https://https://github.com/westonplatter/finx-reports-ib.git@main
 ```
 
 Or add it to your `requirements.txt` file,
-```
+```bash
 finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.git@main
 ```
 
@@ -43,12 +43,20 @@ finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.g
    15. Breakout by Day = No
 
 
-2. Clone the repo and install it
-    
-    ```
+2. Clone the repo and install it with uv
+
+    ```bash
     git clone git@github.com:westonplatter/finx-reports-ib.git
     cd finx-reports-ib
-    pip install --edit .
+
+    # Install uv if you haven't already
+    # See: https://docs.astral.sh/uv/getting-started/installation/
+
+    # Sync dependencies (creates virtual environment and installs all dependencies)
+    uv sync
+
+    # Or sync with optional dev dependencies
+    uv sync --extra dev
     ```
 
 3. Create your own `.env` file
@@ -64,11 +72,41 @@ finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.g
     ```
 
 4. Run the download command
-    ```
+    ```bash
     # note that `report-name` matches up with annual key in the .env file
-    python cli.py download --report-name=annual --cache
-
-    # see the python import/methods in cli.py
+    uv run python -c "from finx_reports_ib.download_trades import execute_csv_for_accounts; execute_csv_for_accounts('annual', cache=True)"
     ```
 
 5. See files in the `data` directory
+
+## uv Commands
+
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management and Python environment management.
+
+### Essential Commands
+
+- **Install dependencies**
+  ```bash
+  uv sync                    # Install core dependencies
+  uv sync --extra dev        # Install with dev dependencies
+  uv sync --extra test       # Install with test dependencies
+  uv sync --all-extras       # Install with all optional dependencies
+  ```
+
+- **Run Python code**
+  ```bash
+  uv run python <script>     # Run a Python script
+  uv run pytest              # Run tests
+  ```
+
+- **Manage dependencies**
+  ```bash
+  uv add <package>           # Add a package to dependencies
+  uv add --dev <package>     # Add a package to dev dependencies
+  uv remove <package>        # Remove a package
+  ```
+
+- **Build and release**
+  ```bash
+  uv build                   # Build the package (replaces python setup.py sdist bdist_wheel)
+  ```
