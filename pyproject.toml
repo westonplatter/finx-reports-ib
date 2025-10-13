@@ -45,11 +45,11 @@ test = [
 ]
 dev = [
     "ipdb",
-    "click",
     "matplotlib",
     "twine",
     "openpyxl",
     "dotenv",
+     "pytest>=7.4.4",
 ]
 docs = [
     "sphinx",
