@@ -1,4 +1,5 @@
 import time
+import warnings
 
 from loguru import logger
 
@@ -103,11 +104,19 @@ def execute_discord_for_accounts(
     """
     Execute the discord notifications process for accounts
 
+    .. deprecated::
+        This function is deprecated and will be removed in a future version.
+
     Args:
         report_name (str): the report to execute. Expected options: daily, weekly, annual
         cache (bool, optional): save FlexReport XML to disk. Defaults to False.
         file_name (str, optional): env file name. Defaults to ".env".
     """
+    warnings.warn(
+        "execute_discord_for_accounts is deprecated and will be removed in a future version.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     configs = get_config(file_name)
     data = get_ib_json(configs)
 
