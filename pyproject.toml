@@ -19,7 +19,7 @@ dependencies = [
     "pytz",
     "requests",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = {text = "BSD-3"}
 dynamic = ["version"]
 readme = "README.md"
