@@ -1,4 +1,4 @@
-ib_insync
+ib-async
 loguru
 pandas
 numpy

@@ -11,7 +11,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-project = "finx_reports_ib"
+project = "NextGenVol IBKR Reports"
 copyright = "2023, Weston Platter"
 author = "Weston Platter"
 release = "0.1.0"

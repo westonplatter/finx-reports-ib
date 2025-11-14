@@ -4,7 +4,7 @@
 #
 # Note: These targets have been removed as cli.py has been deleted
 # If you need to run these commands, use the Python functions directly:
-# uv run python -c "from finx_reports_ib.download_trades import execute_csv_for_accounts; execute_csv_for_accounts('annual', cache=True)"
+# uv run python -c "from ngv_ibkr_reports.download_trades import execute_csv_for_accounts; execute_csv_for_accounts('annual', cache=True)"
 
 ###############################################################################
 #
@@ -26,7 +26,7 @@ test:
 release: release.applytag release.check release.build release.upload
 
 release.applytag:
-	echo $$(git describe --tags --abbrev=0 ) > finx_ib_reports/version.txt
+	echo $$(git describe --tags --abbrev=0 ) > ngv_ibkr_reports/version.txt
 
 release.check:
 	pre-commit run -a

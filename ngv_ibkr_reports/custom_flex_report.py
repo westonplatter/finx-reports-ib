@@ -1,9 +1,9 @@
 from typing import List
 
 import pandas as pd
-from ib_insync.flexreport import FlexReport
+from ib_async.flexreport import FlexReport
 
-from finx_reports_ib.transforms import parse_date_series, parse_datetime_series
+from ngv_ibkr_reports.transforms import parse_date_series, parse_datetime_series
 
 
 class CustomFlexReport(FlexReport):

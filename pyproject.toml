@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "finx_reports_ib"
-description="IBKR report data via ib_insync"
+name = "ngv_ibkr_reports"
+description="IBKR report data via ib_async"
 authors = [
     {name = "Weston Platter", email = "westonplatter+finx@gmail.com"},
 ]
 dependencies = [
-    "ib_insync",
+    "ib-async",
     "loguru",
     "pandas",
     "numpy",
@@ -19,24 +19,24 @@ dependencies = [
     "pytz",
     "requests",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = {text = "BSD-3"}
 dynamic = ["version"]
 readme = "README.md"
 
 
 [tool.setuptools.dynamic]
-version = {attr = "finx_reports_ib.VERSION"}
+version = {attr = "ngv_ibkr_reports.VERSION"}
 
 
 [tool.setuptools.packages.find]
-include = ['finx_reports_ib*']
+include = ['ngv_ibkr_reports*']
  
 
 [project.urls]
-Homepage = "https://github.com/westonplatter/finx-reports-ib"
-"Issue Tracker" = "https://github.com/westonplatter/finx-reports-ib/issues"
-"Source Code" = "https://github.com/westonplatter/finx-reports-ib"
+Homepage = "https://github.com/westonplatter/ngv-ibkr-reports"
+"Issue Tracker" = "https://github.com/westonplatter/ngv-ibkr-reports/issues"
+"Source Code" = "https://github.com/westonplatter/ngv-ibkr-reports"
 
 
 [project.optional-dependencies]

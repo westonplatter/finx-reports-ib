@@ -7,8 +7,8 @@ from pydantic import BaseModel
 from pytz import timezone
 from typing import List
 
-from finx_reports_ib.custom_flex_report import (
-    CustomFlexReport, 
+from ngv_ibkr_reports.custom_flex_report import (
+    CustomFlexReport,
     parse_date_series,
 )
 

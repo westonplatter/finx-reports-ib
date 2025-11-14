@@ -1,23 +1,23 @@
 API Reference
 =============
 
-.. automodule:: finx_reports_ib.config_helpers
+.. automodule:: ngv_ibkr_reports.config_helpers
     :members:
 
-.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterCSV
-    :members:
-    
-.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterPandas
+.. autoclass:: ngv_ibkr_reports.adapters.ReportOutputAdapterCSV
     :members:
 
-.. autoclass:: finx_reports_ib.adapters.ReportOutputAdapterDiscord
+.. autoclass:: ngv_ibkr_reports.adapters.ReportOutputAdapterPandas
     :members:
 
-.. autoclass:: finx_reports_ib.custom_flex_report.CustomFlexReport
+.. autoclass:: ngv_ibkr_reports.adapters.ReportOutputAdapterDiscord
     :members:
 
-.. automodule:: finx_reports_ib.download_trades
+.. autoclass:: ngv_ibkr_reports.custom_flex_report.CustomFlexReport
     :members:
 
-.. automodule:: finx_reports_ib.transforms
+.. automodule:: ngv_ibkr_reports.download_trades
+    :members:
+
+.. automodule:: ngv_ibkr_reports.transforms
     :members:
