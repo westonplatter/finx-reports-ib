@@ -1,4 +1,4 @@
-from finx_reports_ib.config_helpers import get_ib_json
+from ngv_ibkr_reports.config_helpers import get_ib_json
 
 
 def test_get_ib_json():

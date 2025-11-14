@@ -1,18 +1,18 @@
-[![Tests](https://github.com/westonplatter/finx-reports-ib/actions/workflows/ci.yml/badge.svg)](https://github.com/westonplatter/finx-reports-ib/actions/workflows/ci.yml) [![Docs](https://github.com/westonplatter/finx-reports-ib/actions/workflows/docs.yml/badge.svg)](https://github.com/westonplatter/finx-reports-ib/actions/workflows/docs.yml)
+[![Tests](https://github.com/westonplatter/ngv-ibkr-reports/actions/workflows/ci.yml/badge.svg)](https://github.com/westonplatter/ngv-ibkr-reports/actions/workflows/ci.yml) [![Docs](https://github.com/westonplatter/ngv-ibkr-reports/actions/workflows/docs.yml/badge.svg)](https://github.com/westonplatter/ngv-ibkr-reports/actions/workflows/docs.yml)
 
-# Finx Reports - IB
+# NextGenVol IBKR Reports
 Python package to generate reports from Interactive Brokers.
 
 
 ## Installing
 Install the module from github,
 ```bash
-pip install git+https://https://github.com/westonplatter/finx-reports-ib.git@main
+pip install git+https://github.com/westonplatter/ngv-ibkr-reports.git@main
 ```
 
 Or add it to your `requirements.txt` file,
 ```bash
-finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.git@main
+ngv_ibkr_reports @ git+https://github.com/westonplatter/ngv-ibkr-reports.git@main
 ```
 
 ## Getting Started
@@ -46,8 +46,8 @@ finx_reports_ib @ git+https://https://github.com/westonplatter/finx-reports-ib.g
 2. Clone the repo and install it with uv
 
     ```bash
-    git clone git@github.com:westonplatter/finx-reports-ib.git
-    cd finx-reports-ib
+    git clone git@github.com:westonplatter/ngv-ibkr-reports.git
+    cd ngv-ibkr-reports
 
     # Install uv if you haven't already
     # See: https://docs.astral.sh/uv/getting-started/installation/
